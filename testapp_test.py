@@ -3,38 +3,58 @@
 # Date:		4/10/2016
 # Program:	testapp
 #
-# Test that data.txt data is the same as in expected.txt, except for the
-# final line from stdin to data.txt.
+# Test that data.txt data is the same as in expected.txt.
 #
-# PRE: Text files for input and output are in ANSI format, unusual
-#      characters don't show up in files when displayed on console. Input 
-#      to prompt is expected to be the last line of input in expected.txt
-#      and rest of data.txt has remainder of the content in expected.txt 
-#      already for test to not fail; . Works with version of testapp.py 
-#      created before 4/10/2016. testapp.py should be in the same directory 
-#      as testapp_test.py.
+# PRE: Text files for input and output are in ANSI format. Input 
+#      is expected to be passed from a file using
 #
-# POST: Indicates whether or not data.txt has same data as expected.txt. 
-#       Suitable for smaller file sizes.
+#      cat FILE | python testapp_test.py
+#
+#      at the command line, where FILE is replaced by the name of the
+#      input file. File is formatted with each line ended by '\n'. 
+#      testapp.py should be in the same directory as testapp_test.py.
+#
+# POST: Indicates whether or not data.txt has same data as expected.txt
+#       and where there are differences. Suitable for smaller file 
+#       sizes.
 
 from io import StringIO
+import sys
 import unittest
 import testapp
 
 class TestTestapp(unittest.TestCase):
 	
-	# Checks that files are the same using lists with each line stored as
-	# a list item
+	def write_stdin_to_file(self, filename):
+	
+		# Open file
+		with open(filename, 'a') as f:
+	
+			# Take input from stdin
+			for line in sys.stdin:
+
+				# Save data to file
+				f.write(str(line))
+	
+#	def in_filename(self):
+#		inFileName = 'expected.txt'
+#		return inFileName
+		
+#	def out_filename(self):
+#		outFileName = 'data.txt'
+	
 	def test_write_stdin_to_file(self):
 		
+		self.write_stdin_to_file('data.txt')
+
 		with open('data.txt', 'r') as f, open('expected.txt', 'r') as fEx:
 			
 			# Read data from both files
-			read = f.readlines()
-			expected_read = fEx.readlines()
+			read = f.read()
+			expected_read = fEx.read()
 			
 			# Check that read file contents are the same
-			self.assertListEqual(read, expected_read)
+			self.assertEqual(read, expected_read)
 
 if __name__ == '__main__':
 	unittest.main()
