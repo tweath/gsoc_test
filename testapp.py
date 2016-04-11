@@ -6,8 +6,7 @@
 # Retrieve line from user terminated by Enter and save to file data.txt.
 # Each entry is appended as a new line at the end of the file.
 #
-# PRE: Text files for input and output are in UTF-8 format, so conversion 
-#      isn't needed for input and output to be in the same format. Input 
+# PRE: Text files for input and output are in ANSI format. Input 
 #      is expected to be passed from a file using
 #
 #      cat FILE | python testapp.py
