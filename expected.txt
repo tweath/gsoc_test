@@ -1,0 +1,7 @@
+hello
+Flying fish
+2+4
+input(3+5)
+Some longer input \n for testing
+Longer input 2*5 that has numbers included
+test
